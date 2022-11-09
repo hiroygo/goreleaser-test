@@ -1,15 +1,20 @@
 project_name: goreleaser-test
 builds:
-  - binary: goreleaser-test
+  - main: .
+    binary: main
+    flags:
+      - -trimpath
+    ldflags:
+      - -s -w
     goos:
       - linux
       - darwin
     goarch:
       - amd64
-    env:
-      - CGO_ENABLED=0
 archives:
   - name_template: '{{ .ProjectName }}_{{ .Os }}_{{ .Arch }}{{ if .Arm }}v{{ .Arm }}{{ end }}'
     format: zip
 release:
   prerelease: auto
+changelog:
+  use: github
